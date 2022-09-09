@@ -119,6 +119,7 @@ contract sudorugTest is Test {
         token.rugUniswap(1_000_000 * 10**18);
 
         assertEq(token.balanceOf(lpToken), 24_000_000 * 10**18);
+        assertEq(token.balanceOf(address(token)), 1_000_000 * 10**18);
 
         // do a buy transaction and a sell transaction
         vm.startPrank(Alice);
